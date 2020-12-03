@@ -2,6 +2,7 @@
 
 namespace App\Actions\Traits;
 
+use App\Actions\Init;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
@@ -11,11 +12,12 @@ trait HandleCsv
      * 把 csv 轉成需要放進資料庫內的 data
      *
      * @param string $fileName csv 檔名，同時為 database, model 的名字
+     * @param string $type
      * @return array
      */
-    private function handleCsvData(string $fileName): array
+    private function handleCsvData(string $fileName, string $type): array
     {
-        $csvArray = $this->openCsvToArray($fileName);
+        $csvArray = $this->openCsvToArray($fileName, $type);
 
         $model = "App\\Model\\" . Str::ucfirst(Str::singular($fileName));
         $tableAttributes = Schema::getColumnListing((new $model())->getTable());
@@ -26,7 +28,7 @@ trait HandleCsv
         $insertData = [];
         foreach ($csvArray as $data) {
             if (count(array_slice($data, 0, $keyNumber)) == $keyNumber) {
-                $insertData[] = array_combine($insertKeys, array_slice($data, 0, 5));
+                $insertData[] = array_combine($insertKeys, array_slice($data, 0, $keyNumber));
             }
         }
         return $insertData;
@@ -51,19 +53,17 @@ trait HandleCsv
 
     /**
      * @param string $fileName
+     * @param string $type
      *
      * @return array
      */
-    private function openCsvToArray(string $fileName): array
+    private function openCsvToArray(string $fileName, string $type): array
     {
-        $filePath = storage_path("app/$fileName.csv");
-        try {
-            $file = file($filePath);
-        } catch (\Exception $e) {
-            $fileName .= '_test';
-            $filePath = storage_path("app/$fileName.csv");
-            $file = file($filePath);
+        if ($type === Init::CSV_TYPE_TEST) {
+            $fileName .= '_' . Init::CSV_TYPE_TEST;
         }
+        $filePath = storage_path("app/$fileName.csv");
+        $file = file($filePath);
 
         $csvArray = array_map('str_getcsv', $file);
         array_shift($csvArray);

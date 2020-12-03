@@ -66,11 +66,6 @@ class FillCandidates extends Action
     public function handle()
     {
         $candidates = Candidate::all();
-        if ($candidates->isEmpty()) {
-            $insertData = $this->handleCsvData('candidates');
-            Candidate::insert($insertData);
-            $candidates = Candidate::all();
-        }
         return $candidates;
     }
 

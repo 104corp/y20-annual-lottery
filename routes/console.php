@@ -19,10 +19,12 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->describe('Display an inspiring quote');
 
-Artisan::command('program:start', function () {
+Artisan::command('program:start {--type=*}', function () {
+    $type = $this->option('type')[0] ?? Init::CSV_TYPE_TEST;
+
     Artisan::call('migrate:fresh');
     $this->comment('database has been droped and then migrated again...');
-    Artisan::call('program:init');
+    Artisan::call("program:init --type=$type");
     $this->comment('data has been initialized...');
     $this->comment('server is about to start...');
     Artisan::call('serve');

@@ -66,11 +66,6 @@ class FillAwards extends Action
     public function handle()
     {
         $awards = Award::all();
-        if ($awards->isEmpty()) {
-            $insertData = $this->handleCsvData('awards');
-            Award::insert($insertData);
-            $awards = Award::all();
-        }
         return $awards;
     }
 

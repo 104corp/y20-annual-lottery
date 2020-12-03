@@ -14,3 +14,5 @@ program.start:
 test.start:
 	php artisan key:generate  --env=testing
 	touch database/database_test.sqlite && php artisan test
+	sed -i.bak 's/base64.*//g' .env.testing
+	rm .env.testing.bak
