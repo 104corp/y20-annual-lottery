@@ -3,7 +3,6 @@
 namespace App\Actions;
 
 use App\Actions\Traits\HandleCsv;
-use App\Exceptions\Model\ResourceErrorException;
 use App\Model\Award;
 use App\Model\Candidate;
 use Lorisleiva\Actions\Action;
@@ -11,6 +10,8 @@ use Lorisleiva\Actions\Action;
 class Init extends Action
 {
     use HandleCsv;
+
+    protected static $commandSignature = 'program:init';
 
     /**
      * Determine if the user is authorized to make this action.
@@ -45,11 +46,6 @@ class Init extends Action
         $insertAwardData = $this->handleCsvData('awards');
         Award::insert($insertAwardData);
         $insertCandidateData = $this->handleCsvData('candidates');
-        Award::insert($insertCandidateData);
-    }
-
-    public function response()
-    {
-        return response(['data' => true]);
+        Candidate::insert($insertCandidateData);
     }
 }

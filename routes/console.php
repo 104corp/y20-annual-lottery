@@ -21,6 +21,9 @@ Artisan::command('inspire', function () {
 
 Artisan::command('program:start', function () {
     Artisan::call('migrate:fresh');
+    $this->comment('database has been droped and then migrated again...');
+    Artisan::call('program:init');
+    $this->comment('data has been initialized...');
+    $this->comment('server is about to start...');
     Artisan::call('serve');
-    (new Init())->run();
 });
