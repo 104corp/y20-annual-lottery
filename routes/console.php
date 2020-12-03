@@ -1,5 +1,6 @@
 <?php
 
+use App\Actions\Init;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 
@@ -18,3 +19,8 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->describe('Display an inspiring quote');
 
+Artisan::command('program:start', function () {
+    Artisan::call('migrate:fresh');
+    Artisan::call('serve');
+    (new Init())->run();
+});

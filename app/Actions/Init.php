@@ -8,28 +8,6 @@ use App\Model\Award;
 use App\Model\Candidate;
 use Lorisleiva\Actions\Action;
 
-/**
- * 把 CSV 資料放進 sqlite 裡
- *
- * @OA\Post(
- *     path = "/api/init",
- *     summary = "把 CSV 資料放進 sqlite 裡",
- *     description = "把 CSV 資料放進 sqlite 裡",
- *     tags = {"開始"},
- *     @OA\Response(
- *         response = "200",
- *         description = "正常回傳",
- *         @OA\JsonContent(
- *             @OA\Property(
- *                 property = "data",
- *                 type = "boolean",
- *                 description = "新增後結果",
- *                 example = true
- *             ),
- *         ),
- *     ),
- * )
- */
 class Init extends Action
 {
     use HandleCsv;

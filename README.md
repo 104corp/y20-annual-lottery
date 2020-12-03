@@ -14,7 +14,8 @@
 
 ### 本機運行
 
-`php artisan serve` 即可運行。當然也可以用 docker 運行。
+`php artisan program:start` 即可運行。當然也可以用 docker 運行。
+若程式已運行過，在 `database/database.sqlite` 會有抽獎紀錄，此時要運行則用 `php artisan serve` 即可。
 
 ## Swagger 文件
 

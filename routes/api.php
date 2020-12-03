@@ -37,7 +37,7 @@ Route::namespace('\App\Actions')->group(function () {
     Route::post('/draw', 'Draw');
     Route::put('/withdraw', 'Withdraw');
 
-    Route::post('/init', 'Init');
-    Route::put('/flush', 'FlushWinners');
+    // Route::post('/init', 'Init');
+    // Route::put('/flush', 'FlushWinners');
 });
 

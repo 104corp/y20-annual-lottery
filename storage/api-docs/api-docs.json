@@ -478,34 +478,6 @@
                 }
             }
         },
-        "/api/init": {
-            "post": {
-                "tags": [
-                    "開始"
-                ],
-                "summary": "把 CSV 資料放進 sqlite 裡",
-                "description": "把 CSV 資料放進 sqlite 裡",
-                "responses": {
-                    "200": {
-                        "description": "正常回傳",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "data": {
-                                            "description": "新增後結果",
-                                            "type": "boolean",
-                                            "example": true
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/api/withdraw": {
             "put": {
                 "tags": [
