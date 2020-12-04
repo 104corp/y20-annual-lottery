@@ -20,12 +20,12 @@ Route::get('/test', function () {
 
 Route::namespace('\App\Actions')->group(function () {
     Route::prefix('candidate')->group(function () {
-        Route::get('/all', 'FillCandidates');
+        Route::get('/all', 'GetCandidates');
         Route::get('/no-win', 'GetCandidateNotWinning');
     });
 
     Route::prefix('award')->group(function () {
-        Route::get('/all', 'FillAwards');
+        Route::get('/all', 'GetAwards');
         Route::post('/create', 'CreateAward');
     });
 
@@ -37,7 +37,6 @@ Route::namespace('\App\Actions')->group(function () {
     Route::post('/draw', 'Draw');
     Route::put('/withdraw', 'Withdraw');
 
-    // Route::post('/init', 'Init');
     // Route::put('/flush', 'FlushWinners');
 });
 

@@ -3,19 +3,19 @@
 namespace App\Actions;
 
 use App\Actions\Traits\HandleCsv;
-use App\Http\Resources\Award as ResourcesAward;
-use App\Model\Award;
+use App\Http\Resources\Candidate as ResourcesCandidate;
+use App\Model\Candidate;
 use Illuminate\Support\Collection;
 use Lorisleiva\Actions\Action;
 
 /**
- * 列出所有獎項
+ * 列出所有參加者
  *
  * @OA\Get(
- *     path = "/api/award/all",
+ *     path = "/api/candidate/all",
  *     summary = "列出所有參加者",
  *     description = "列出所有參加者",
- *     tags = {"獎品"},
+ *     tags = {"參加者"},
  *     @OA\Response(
  *         response = "200",
  *         description = "正常回傳",
@@ -26,7 +26,7 @@ use Lorisleiva\Actions\Action;
  *                     property = "data",
  *                     type = "array",
  *                     @OA\Items(
- *                         ref = "#/components/schemas/Award.Award",
+ *                         ref = "#/components/schemas/Candidate.Candidate",
  *                     ),
  *                 ),
  *             ),
@@ -34,7 +34,7 @@ use Lorisleiva\Actions\Action;
  *     ),
  * )
  */
-class FillAwards extends Action
+class GetCandidates extends Action
 {
     use HandleCsv;
 
@@ -65,18 +65,18 @@ class FillAwards extends Action
      */
     public function handle()
     {
-        $awards = Award::all();
-        return $awards;
+        $candidates = Candidate::all();
+        return $candidates;
     }
 
     /**
      * response 控制
-     * @param Collection $awards
+     * @param Collection $candidates
      *
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function response($awards)
+    public function response(Collection $candidates)
     {
-        return ResourcesAward::collection($awards);
+        return ResourcesCandidate::collection($candidates);
     }
 }

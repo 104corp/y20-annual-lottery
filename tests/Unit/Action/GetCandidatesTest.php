@@ -2,12 +2,12 @@
 
 namespace Tests\Unit\Action;
 
-use App\Actions\FillCandidates;
+use App\Actions\GetCandidates;
 use App\Actions\Init;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class FillCandidatesTest extends TestCase
+class GetCandidatesTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -20,7 +20,7 @@ class FillCandidatesTest extends TestCase
     public function testInsertDataSuccess()
     {
         // act
-        $actual = FillCandidates::run();
+        $actual = GetCandidates::run();
 
         // assert
         $this->assertDatabaseHas(
