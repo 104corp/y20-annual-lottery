@@ -10,7 +10,7 @@
 
 - `composer` 進行相關套件的下載
 - 生成需要的環境檔：`cp .env.example .env`
-- 生成key：`php artisan key:generate`
+- 生成key：`make key.generate`
 
 ### 本機運行
 
@@ -22,13 +22,13 @@
 
 使用 `zircote/swagger-php` 與 `darkaonline/l5-swagger` 撰寫 API 文件
 
-- `php artisan l5-swagger:generate` 即可在 `storage/api-docs/` 產生 swagger json 文件；
+- `make api-docs` 即可在 `storage/api-docs/` 產生 swagger json 文件；
 - 靜態頁面於 `http://localhost:8000/api/documentation`。
 
 ## 測試相關
 
 - code-sniffing 可下 `./vendor/bin/phpcs` 相關設定檔於 [`phpcs.xml`](/phpcs.xml)；
-- 測試可下 `./vendor/bin/phpunit`
+- 測試可下 `make test.start`
 
 ## Built With
 

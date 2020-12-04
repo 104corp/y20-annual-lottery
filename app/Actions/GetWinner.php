@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
  *     path = "/api/winner",
  *     summary = "列出指定獎項的得獎者",
  *     description = "列出指定獎項的得獎者",
- *     tags = {"參加者"},
+ *     tags = {"得獎者"},
  *     @OA\Parameter(
  *         name = "awardName",
  *         in = "query",

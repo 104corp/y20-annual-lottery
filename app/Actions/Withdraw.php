@@ -12,7 +12,7 @@ use Lorisleiva\Actions\Action;
  * @OA\Put(
  *     path = "/api/withdraw",
  *     summary = "參加者放棄獎項",
- *     description = "參加者放棄獎項",
+ *     description = "參加者放棄獎項，一次只能放棄一筆，不能多筆放棄",
  *     tags = {"抽獎"},
  *     @OA\RequestBody(
  *         description = "API傳入的內容",

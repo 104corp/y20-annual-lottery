@@ -208,70 +208,10 @@
                 }
             }
         },
-        "/api/award/all": {
-            "get": {
-                "tags": [
-                    "獎品"
-                ],
-                "summary": "列出所有參加者",
-                "description": "列出所有參加者",
-                "responses": {
-                    "200": {
-                        "description": "正常回傳",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "data": {
-                                            "description": "列出所有獎項",
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/Award.Award"
-                                            }
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/candidate/all": {
-            "get": {
-                "tags": [
-                    "參加者"
-                ],
-                "summary": "列出所有參加者",
-                "description": "列出所有參加者",
-                "responses": {
-                    "200": {
-                        "description": "正常回傳",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "data": {
-                                            "description": "列出所有參加者",
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/Candidate.Candidate"
-                                            }
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/api/winner/all": {
             "get": {
                 "tags": [
-                    "參加者"
+                    "得獎者"
                 ],
                 "summary": "列出所有得獎者",
                 "description": "列出所有得獎者",
@@ -316,6 +256,36 @@
                                         "details": {
                                             "description": "額外錯誤資訊",
                                             "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/award/all": {
+            "get": {
+                "tags": [
+                    "獎品"
+                ],
+                "summary": "列出所有參加者",
+                "description": "列出所有參加者",
+                "responses": {
+                    "200": {
+                        "description": "正常回傳",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "description": "列出所有獎項",
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Award.Award"
+                                            }
                                         }
                                     },
                                     "type": "object"
@@ -387,10 +357,40 @@
                 }
             }
         },
-        "/api/winner": {
+        "/api/candidate/all": {
             "get": {
                 "tags": [
                     "參加者"
+                ],
+                "summary": "列出所有參加者",
+                "description": "列出所有參加者",
+                "responses": {
+                    "200": {
+                        "description": "正常回傳",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "description": "列出所有參加者",
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Candidate.Candidate"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/winner": {
+            "get": {
+                "tags": [
+                    "得獎者"
                 ],
                 "summary": "列出指定獎項的得獎者",
                 "description": "列出指定獎項的得獎者",
@@ -484,7 +484,7 @@
                     "抽獎"
                 ],
                 "summary": "參加者放棄獎項",
-                "description": "參加者放棄獎項",
+                "description": "參加者放棄獎項，一次只能放棄一筆，不能多筆放棄",
                 "requestBody": {
                     "description": "API傳入的內容",
                     "content": {

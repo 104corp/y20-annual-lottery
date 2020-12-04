@@ -16,3 +16,7 @@ test.start:
 	touch database/database_test.sqlite && php artisan test
 	sed -i.bak 's/base64.*//g' .env.testing
 	rm .env.testing.bak
+
+.PHONY: api-docs
+api-docs:
+	php artisan l5-swagger:generate

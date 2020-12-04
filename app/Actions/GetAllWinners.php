@@ -15,7 +15,7 @@ use Lorisleiva\Actions\Action;
  *     path = "/api/winner/all",
  *     summary = "列出所有得獎者",
  *     description = "列出所有得獎者",
- *     tags = {"參加者"},
+ *     tags = {"得獎者"},
  *     @OA\Response(
  *         response = "200",
  *         description = "正常回傳",

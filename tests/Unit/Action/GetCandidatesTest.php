@@ -14,13 +14,13 @@ class GetCandidatesTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        Init::run(['type' => 'test']);
+        (new Init(['type' => 'test']))->run();
     }
 
     public function testInsertDataSuccess()
     {
         // act
-        $actual = GetCandidates::run();
+        $actual = (new GetCandidates())->run();
 
         // assert
         $this->assertDatabaseHas(

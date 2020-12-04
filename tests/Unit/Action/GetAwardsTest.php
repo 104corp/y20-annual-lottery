@@ -14,13 +14,13 @@ class GetAwardsTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        Init::run(['type' => 'test']);
+        (new Init(['type' => 'test']))->run();
     }
 
     public function testInsertDataSuccess()
     {
         // act
-        $actual = GetAwards::run();
+        $actual = (new GetAwards())->run();
 
         // assert
         $this->assertDatabaseHas(
