@@ -33,8 +33,9 @@ class Init extends Action
      */
     public function getAttributesFromCommand(Command $command): array
     {
+        $type = $command->option('type')[0] ?? Init::CSV_TYPE_TEST;
         return [
-            'type' => $command->option('type')[0]
+            'type' => $type,
         ];
     }
 
@@ -52,5 +53,10 @@ class Init extends Action
         Award::insert($insertAwardData);
         $insertCandidateData = $this->handleCsvData('candidates', $this->type);
         Candidate::insert($insertCandidateData);
+    }
+
+    public function consoleOutput($result, Command $command)
+    {
+        $command->comment('data has been initialized!');
     }
 }
