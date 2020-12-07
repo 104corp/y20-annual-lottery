@@ -141,6 +141,13 @@ class Draw extends Action
 
         $candidates = Candidate::notWinners()->get();
         $shuffledCandidates = $candidates->shuffle();
+
+        // 除了基本 shuffle 一次，再隨機 shuffle 1-4 次
+        for ($i = 0; $i < rand(1, 4); $i++) {
+            $shuffledCandidates = $shuffledCandidates->shuffle();
+        }
+
+        // 在 shuffle 過後的名單內再 random 挑出需要數量的獲獎者
         $winners = $shuffledCandidates->random($candidateNumber);
 
         $this->updateCandidatesAsWinners($winners, $award);
