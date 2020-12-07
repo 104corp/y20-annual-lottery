@@ -105,10 +105,13 @@ class CreateAward extends Action
 
     /**
      * Execute the action and return a result.
+     * @param string $awardName
+     * @param int $money
+     * @param int|null $number
      *
      * @return void
      */
-    public function handle(string $awardName, int $money, $number)
+    public function handle(string $awardName, int $money, $number = null)
     {
         $number = $number ?? 10;
         $oldAward = Award::where('name', $awardName)->first();

@@ -30,7 +30,7 @@ class FlushWinners extends Action
     /**
      * Execute the action and return a result.
      *
-     * @return mixed
+     * @return void
      */
     public function handle()
     {
@@ -45,6 +45,7 @@ class FlushWinners extends Action
 
     /**
      * 控制 response
+     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
      */
     public function response()
     {

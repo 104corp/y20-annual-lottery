@@ -42,21 +42,32 @@ class Init extends Action
     /**
      * Execute the action and return a result.
      *
-     * @return void
+     * @return boolean
      */
-    public function handle()
+    public function handle(): bool
     {
         if ((Award::all())->isNotEmpty() || (Candidate::all())->isNotEmpty()) {
-            return;
+            return false;
         }
         $insertAwardData = $this->handleCsvData('awards', $this->type);
         Award::insert($insertAwardData);
         $insertCandidateData = $this->handleCsvData('candidates', $this->type);
         Candidate::insert($insertCandidateData);
+        return true;
     }
 
-    public function consoleOutput($result, Command $command)
+    /**
+     * @param bool $succeeded
+     * @param Command $command
+     *
+     * @return void
+     */
+    public function consoleOutput($succeeded, Command $command)
     {
-        $command->comment('data has been initialized!');
+        if ($succeeded) {
+            $command->comment('data has been initialized!');
+            return;
+        }
+        $command->comment('data already initialized!');
     }
 }

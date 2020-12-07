@@ -115,8 +115,10 @@ class GetWinner extends Action
     /**
      * Execute the action and return a result.
      *
+     * @param string $awardName
+     *
      * @return Award
-     * @throws ResourceErrorException
+     * @throws ResourceErrorException|ResourceNotFoundException
      */
     public function handle(string $awardName)
     {

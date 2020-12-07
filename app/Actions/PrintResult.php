@@ -39,9 +39,18 @@ class PrintResult extends Action
     {
         $awards = (new GetAllWinners())->run();
         $winnerList = $this->handleWinnerList($awards);
+
+        // 寫出得獎名單
         $this->writeCsv($winnerList);
+
+        return $winnerList;
     }
 
+    /**
+     * @param Collection $awards
+     *
+     * @return array
+     */
     private function handleWinnerList(Collection $awards): array
     {
         $winnerList = [];
@@ -60,6 +69,12 @@ class PrintResult extends Action
         return $winnerList;
     }
 
+    /**
+     * 寫出得獎名單
+     * @param array $winnerList
+     *
+     * @return void
+     */
     private function writeCsv(array $winnerList)
     {
         $fp = fopen(storage_path('app/winnerList.csv'), 'w');
@@ -77,8 +92,15 @@ class PrintResult extends Action
         fclose($fp);
     }
 
-    public function consoleOutput($result, Command $command)
+    /**
+     * @param array $winnerList
+     * @param Command $command
+     *
+     * @return void
+     */
+    public function consoleOutput($winnerList, Command $command)
     {
-        $command->comment('Result has been updated!');
+        $totalWinners = count($winnerList);
+        $command->comment("Result has been updated! Total winners: $totalWinners people.");
     }
 }

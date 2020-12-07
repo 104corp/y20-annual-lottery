@@ -84,7 +84,7 @@ class GetCandidateNotWinning extends Action
     /**
      * Execute the action and return a result.
      *
-     * @return mixed
+     * @return Collection
      */
     public function handle()
     {

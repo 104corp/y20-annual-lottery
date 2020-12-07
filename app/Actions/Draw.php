@@ -130,6 +130,8 @@ class Draw extends Action
 
     /**
      * Execute the action and return a result.
+     * @param string $awardName
+     * @param int $candidateNumber
      *
      * @return Collection 贏家
      * @throws ResourceNotFoundException|ResourceErrorException
