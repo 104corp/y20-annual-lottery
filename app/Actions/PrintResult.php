@@ -37,13 +37,22 @@ class PrintResult extends Action
      */
     public function handle()
     {
-        $awards = (new GetAllWinners())->run();
-        $winnerList = $this->handleWinnerList($awards);
+        $winnerList = [];
+        $succeeded = true;
+        try {
+            $awards = (new GetAllWinners())->run();
+            $winnerList = $this->handleWinnerList($awards);
 
-        // 寫出得獎名單
-        $this->writeCsv($winnerList);
+            // 寫出得獎名單
+            $this->writeCsv($winnerList);
+        } catch (\Exception $e) {
+            $succeeded = false;
+        }
 
-        return $winnerList;
+        return [
+            'succeeded' => $succeeded,
+            'winnerList' => $winnerList,
+        ];
     }
 
     /**
@@ -93,14 +102,18 @@ class PrintResult extends Action
     }
 
     /**
-     * @param array $winnerList
+     * @param array $result
      * @param Command $command
      *
      * @return void
      */
-    public function consoleOutput($winnerList, Command $command)
+    public function consoleOutput($result, Command $command)
     {
-        $totalWinners = count($winnerList);
-        $command->comment("Result has been updated! Total winners: $totalWinners people.");
+        if ($result['succeeded']) {
+            $totalWinners = count($result['winnerList']);
+            $command->comment("Result has been updated! Total winners: $totalWinners people.");
+            return;
+        }
+        $command->comment("There are no winners so far.");
     }
 }

@@ -85,4 +85,25 @@ class DrawTest extends TestCase
             'candidateNumber' => 3,
         ]);
     }
+
+    public function testDrawFailedBecauseEveryCandidateHasAward()
+    {
+        // expect exception
+        $this->expectExceptionMessage('參加者都已有獎項！');
+        $this->expectException(ResourceErrorException::class);
+
+        // arrange
+        $this->createFakeWinners();
+
+        // act
+        (new Draw())->run([
+            'awardName' => '一獎',
+            'candidateNumber' => 1,
+        ]);
+    }
+
+    private function createFakeWinners()
+    {
+        Candidate::notWinners()->update(['award_id' => 2]);
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\Actions\PrintResult;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 

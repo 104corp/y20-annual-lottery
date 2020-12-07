@@ -142,6 +142,11 @@ class Draw extends Action
         $award = $this->handleAward($awardName, $candidateNumber);
 
         $candidates = Candidate::notWinners()->get();
+
+        if ($candidates->isEmpty()) {
+            throw new ResourceErrorException('參加者都已有獎項！');
+        }
+
         $shuffledCandidates = $candidates->shuffle();
 
         // 除了基本 shuffle 一次，再隨機 shuffle 1-4 次
@@ -194,7 +199,8 @@ class Draw extends Action
      */
     private function udateAwardNumber(Award $award, $candidateNumber): void
     {
-        $award->decrement('number', $candidateNumber);
+        $award->number -= $candidateNumber;
+        $award->save();
     }
 
     /**

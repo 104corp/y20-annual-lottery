@@ -103,7 +103,8 @@ class Withdraw extends Action
 
         $withdrawingCandidates->each(function ($candidate) {
             $award = $candidate->award;
-            $award->increment('number');
+            $award->number += 1;
+            $award->save();
         });
 
         $candidateIds = $withdrawingCandidates->pluck('id');
