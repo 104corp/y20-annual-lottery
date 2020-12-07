@@ -62,10 +62,15 @@ trait HandleCsv
         if ($type === Init::CSV_TYPE_TEST) {
             $fileName .= '_' . Init::CSV_TYPE_TEST;
         }
-        $filePath = storage_path("app/$fileName.csv");
-        $file = file($filePath);
+        try {
+            $filePath = storage_path("app/$fileName.csv");
+            $file = file($filePath);
+        } catch (\Exception $e) {
+            dd("$fileName.csv 不存在！");
+        }
 
         $csvArray = array_map('str_getcsv', $file);
+        // 標頭不需要，把它推除 array
         array_shift($csvArray);
 
         return $csvArray;

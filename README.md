@@ -16,6 +16,8 @@
 
 `make program.start` 即可運行。
 
+若是要運行測試資料（`candidates_test.csv` & `awards_test.csv`），則下 `make program.start type=test`。
+
 若程式已運行過，在 `database/database.sqlite` 會有抽獎紀錄，此時要運行則用 `php artisan serve` 即可。
 
 ## Swagger 文件
@@ -29,6 +31,10 @@
 
 - code-sniffing 可下 `./vendor/bin/phpcs` 相關設定檔於 [`phpcs.xml`](/phpcs.xml)；
 - 測試可下 `make test.start`
+
+## 其他文件
+
+其他相關文件位於 [`storage/docs/`](storage/docs/)
 
 ## Built With
 

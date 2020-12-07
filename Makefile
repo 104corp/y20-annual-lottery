@@ -1,3 +1,5 @@
+type = "real"
+
 .PHONY: key.genrate
 key.generate:
 	php artisan key:generate
@@ -8,7 +10,11 @@ key.generate.test:
 
 .PHONY: program.start
 program.start:
-	touch database/database.sqlite && php artisan program:start
+	touch database/database.sqlite && php artisan program:start --type=$(type)
+
+.PHONY: program.print-result
+program.print-result:
+	php artisan program:print-result
 
 .PHONY: test.start
 test.start:
