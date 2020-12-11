@@ -11,14 +11,14 @@ use Lorisleiva\Actions\Action;
  *
  * @OA\Post(
  *     path = "/api/award/create",
- *     summary = "新增加碼獎項",
+ *     summary = "新增加碼獎項（今年暫不使用，route 關閉中）",
  *     description = "新增加碼獎項",
  *     tags = {"獎品"},
  *     @OA\RequestBody(
  *         description = "API傳入的內容",
  *         @OA\JsonContent(
  *             @OA\Property(
- *                 property = "awardName",
+ *                 property = "name",
  *                 type = "string",
  *                 description = "獎項名稱",
  *                 example = "一獎"
@@ -30,7 +30,7 @@ use Lorisleiva\Actions\Action;
  *                 example = 3000
  *             ),
  *             @OA\Property(
- *                 property = "number",
+ *                 property = "limit",
  *                 type = "integer",
  *                 description = "獎項數量，非必填（default 10 個）",
  *                 default = 10,
@@ -121,7 +121,7 @@ class CreateAward extends Action
 
         Award::insert([
             'name' => $awardName,
-            'amount_of_money' => $money,
+            'money' => $money,
             'number' => $number,
         ]);
     }

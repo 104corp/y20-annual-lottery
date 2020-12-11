@@ -40,7 +40,7 @@ class PrintResult extends Action
         $winnerList = [];
         $succeeded = true;
         try {
-            $awards = (new GetAllWinners())->run();
+            $awards = (new GetAwards())->run();
             $winnerList = $this->handleWinnerList($awards);
 
             // 寫出得獎名單
@@ -71,7 +71,7 @@ class PrintResult extends Action
                 $winnerData[] = $candidate->department;
                 $winnerData[] = $candidate->on_board_date;
                 $winnerData[] = $award->name;
-                $winnerData[] = $award->amount_of_money;
+                $winnerData[] = $award->money;
                 $winnerList[] = $winnerData;
             }
         }

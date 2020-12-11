@@ -5,6 +5,7 @@ namespace Tests\Unit\Action;
 use App\Actions\Draw;
 use App\Actions\Init;
 use App\Exceptions\Model\ResourceErrorException;
+use App\Model\Award;
 use App\Model\Candidate;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
@@ -30,8 +31,7 @@ class DrawTest extends TestCase
         ]);
 
         // assert
-        $this->assertInstanceOf(Collection::class, $actual);
-        $this->assertInstanceOf(Candidate::class, $actual->first());
+        $this->assertInstanceOf(Award::class, $actual);
         $this->assertDatabaseHas(
             'candidates',
             [
@@ -49,9 +49,7 @@ class DrawTest extends TestCase
         ]);
 
         // assert
-        $this->assertInstanceOf(Collection::class, $actual);
-        $this->assertInstanceOf(Candidate::class, $actual->first());
-        $this->assertCount(3, $actual->toArray());
+        $this->assertInstanceOf(Award::class, $actual);
         $this->assertDatabaseHas(
             'candidates',
             [

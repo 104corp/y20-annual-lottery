@@ -32,7 +32,7 @@ class CreateAwardTest extends TestCase
             'awards',
             [
                 'name' => '螺旋獎',
-                'amount_of_money' => 10000,
+                'money' => 10000,
                 'number' => 3,
             ]
         );

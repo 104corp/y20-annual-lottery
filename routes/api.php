@@ -26,12 +26,8 @@ Route::namespace('\App\Actions')->group(function () {
 
     Route::prefix('award')->group(function () {
         Route::get('/all', 'GetAwards');
-        Route::post('/create', 'CreateAward');
-    });
-
-    Route::prefix('winner')->group(function () {
-        Route::get('/', 'GetWinner');
-        Route::get('/all', 'GetAllWinners');
+        Route::get('/', 'GetAward');
+        // Route::post('/create', 'CreateAward');
     });
 
     Route::post('/draw', 'Draw');

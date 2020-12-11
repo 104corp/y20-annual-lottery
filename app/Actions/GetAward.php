@@ -4,6 +4,7 @@ namespace App\Actions;
 
 use App\Model\Award;
 use App\Exceptions\Model\ResourceErrorException;
+use App\Http\Resources\Award as ResourcesAward;
 use App\Http\Resources\Winner;
 use Lorisleiva\Actions\Action;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
@@ -12,10 +13,10 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
  * 列出指定獎項的得獎者
  *
  * @OA\Get(
- *     path = "/api/winner",
+ *     path = "/api/award",
  *     summary = "列出指定獎項的得獎者",
  *     description = "列出指定獎項的得獎者",
- *     tags = {"得獎者"},
+ *     tags = {"獎品"},
  *     @OA\Parameter(
  *         name = "awardName",
  *         in = "query",
@@ -31,7 +32,7 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
  *             @OA\Schema(
  *                 @OA\Property(
  *                     property = "data",
- *                     ref = "#/components/schemas/Candidate.Winner",
+ *                     ref = "#/components/schemas/Award.Award",
  *                 ),
  *             ),
  *         ),
@@ -88,7 +89,7 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
  *     ),
  * )
  */
-class GetWinner extends Action
+class GetAward extends Action
 {
     /**
      * Determine if the user is authorized to make this action.
@@ -137,10 +138,10 @@ class GetWinner extends Action
      *
      * @param Award $award
      *
-     * @return Winner
+     * @return ResourcesAward
      */
     public function response(Award $award)
     {
-        return new Winner($award);
+        return new ResourcesAward($award);
     }
 }

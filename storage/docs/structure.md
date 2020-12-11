@@ -10,7 +10,7 @@
 - `Withdraw.php`：放棄獎項
 - `CreateAward.php`：新增新獎項
 - `GetWinners.php`：取得所有贏家
-- `GetWinner.php`：取得指定獎項的贏家
+- `GetAward.php`：取得指定獎項的贏家
 
 ### 其他
 

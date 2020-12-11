@@ -5,7 +5,7 @@ namespace App\Actions;
 use App\Model\Award;
 use App\Model\Candidate;
 use App\Exceptions\Model\ResourceErrorException;
-use App\Http\Resources\Candidate as ResourcesCandidate;
+use App\Http\Resources\Award as ResourcesAward;
 use Illuminate\Support\Collection;
 use Lorisleiva\Actions\Action;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
@@ -22,15 +22,15 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
  *         description = "API傳入的內容",
  *         @OA\JsonContent(
  *             @OA\Property(
- *                 property = "awardName",
+ *                 property = "name",
  *                 type = "string",
  *                 description = "獎項名稱",
  *                 example = "一獎"
  *             ),
  *             @OA\Property(
- *                 property = "candidateNumber",
+ *                 property = "number",
  *                 type = "integer",
- *                 description = "抽幾個人",
+ *                 description = "抽幾個人，可不傳（不傳就是該獎項一次全抽）",
  *                 example = 1
  *             ),
  *         ),
@@ -43,10 +43,7 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
  *             @OA\Schema(
  *                 @OA\Property(
  *                     property = "data",
- *                     type = "array",
- *                     @OA\Items(
- *                         ref = "#/components/schemas/Candidate.Candidate",
- *                     ),
+ *                     ref = "#/components/schemas/Award.Award",
  *                 ),
  *             ),
  *         ),
@@ -133,10 +130,10 @@ class Draw extends Action
      * @param string $awardName
      * @param int $candidateNumber
      *
-     * @return Collection 贏家
+     * @return Award 獎
      * @throws ResourceNotFoundException|ResourceErrorException
      */
-    public function handle($awardName, $candidateNumber): Collection
+    public function handle($awardName, $candidateNumber): Award
     {
         $candidateNumber = $candidateNumber ?? 1;
         $award = $this->handleAward($awardName, $candidateNumber);
@@ -160,17 +157,17 @@ class Draw extends Action
         $this->updateCandidatesAsWinners($winners, $award);
         $this->udateAwardNumber($award, $candidateNumber);
 
-        return $winners;
+        return $award;
     }
 
     /**
      * response 控制
-     * @param Collection $winners
+     * @param Award $award
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function response(Collection $winners)
+    public function response(Award $award)
     {
-        return ResourcesCandidate::collection($winners);
+        return new ResourcesAward($award);
     }
 
     /**

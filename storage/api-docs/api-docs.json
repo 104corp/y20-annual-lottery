@@ -21,7 +21,7 @@
                 "tags": [
                     "獎品"
                 ],
-                "summary": "新增加碼獎項",
+                "summary": "新增加碼獎項（今年暫不使用，route 關閉中）",
                 "description": "新增加碼獎項",
                 "requestBody": {
                     "description": "API傳入的內容",
@@ -29,7 +29,7 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "awardName": {
+                                    "name": {
                                         "description": "獎項名稱",
                                         "type": "string",
                                         "example": "一獎"
@@ -39,7 +39,7 @@
                                         "type": "integer",
                                         "example": 3000
                                     },
-                                    "number": {
+                                    "limit": {
                                         "description": "獎項數量，非必填（default 10 個）",
                                         "type": "integer",
                                         "default": 10,
@@ -113,13 +113,13 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "awardName": {
+                                    "name": {
                                         "description": "獎項名稱",
                                         "type": "string",
                                         "example": "一獎"
                                     },
-                                    "candidateNumber": {
-                                        "description": "抽幾個人",
+                                    "number": {
+                                        "description": "抽幾個人，可不傳（不傳就是該獎項一次全抽）",
                                         "type": "integer",
                                         "example": 1
                                     }
@@ -137,11 +137,7 @@
                                 "schema": {
                                     "properties": {
                                         "data": {
-                                            "description": "抽獎",
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/Candidate.Candidate"
-                                            }
+                                            "$ref": "#/components/schemas/Award.Award"
                                         }
                                     },
                                     "type": "object"
@@ -208,13 +204,22 @@
                 }
             }
         },
-        "/api/winner/all": {
+        "/api/award": {
             "get": {
                 "tags": [
-                    "得獎者"
+                    "獎品"
                 ],
-                "summary": "列出所有得獎者",
-                "description": "列出所有得獎者",
+                "summary": "列出指定獎項的得獎者",
+                "description": "列出指定獎項的得獎者",
+                "parameters": [
+                    {
+                        "name": "awardName",
+                        "in": "query",
+                        "description": "獎項名稱",
+                        "required": true,
+                        "example": "一獎"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "正常回傳",
@@ -223,11 +228,7 @@
                                 "schema": {
                                     "properties": {
                                         "data": {
-                                            "description": "列出所有得獎者",
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/Candidate.Winner"
-                                            }
+                                            "$ref": "#/components/schemas/Award.Award"
                                         }
                                     },
                                     "type": "object"
@@ -236,7 +237,7 @@
                         }
                     },
                     "400": {
-                        "description": "目前沒有得獎者",
+                        "description": "獎項未有得獎者",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -251,7 +252,35 @@
                                             "description": "錯誤訊息",
                                             "type": "string",
                                             "default": "",
-                                            "example": "目前沒有得獎者！"
+                                            "example": "目前此獎項尚未有中獎者！"
+                                        },
+                                        "details": {
+                                            "description": "額外錯誤資訊",
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "找不到獎項",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "description": "status code",
+                                            "type": "integer",
+                                            "default": 500,
+                                            "example": 500
+                                        },
+                                        "message": {
+                                            "description": "錯誤訊息",
+                                            "type": "string",
+                                            "default": "",
+                                            "example": "找不到對應的獎項！"
                                         },
                                         "details": {
                                             "description": "額外錯誤資訊",
@@ -387,97 +416,6 @@
                 }
             }
         },
-        "/api/winner": {
-            "get": {
-                "tags": [
-                    "得獎者"
-                ],
-                "summary": "列出指定獎項的得獎者",
-                "description": "列出指定獎項的得獎者",
-                "parameters": [
-                    {
-                        "name": "awardName",
-                        "in": "query",
-                        "description": "獎項名稱",
-                        "required": true,
-                        "example": "一獎"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "正常回傳",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "data": {
-                                            "$ref": "#/components/schemas/Candidate.Winner"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "獎項未有得獎者",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "status": {
-                                            "description": "status code",
-                                            "type": "integer",
-                                            "default": 500,
-                                            "example": 400
-                                        },
-                                        "message": {
-                                            "description": "錯誤訊息",
-                                            "type": "string",
-                                            "default": "",
-                                            "example": "目前此獎項尚未有中獎者！"
-                                        },
-                                        "details": {
-                                            "description": "額外錯誤資訊",
-                                            "example": []
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "找不到獎項",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "status": {
-                                            "description": "status code",
-                                            "type": "integer",
-                                            "default": 500,
-                                            "example": 500
-                                        },
-                                        "message": {
-                                            "description": "錯誤訊息",
-                                            "type": "string",
-                                            "default": "",
-                                            "example": "找不到對應的獎項！"
-                                        },
-                                        "details": {
-                                            "description": "額外錯誤資訊",
-                                            "example": []
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/api/withdraw": {
             "put": {
                 "tags": [
@@ -569,10 +507,17 @@
                         "type": "integer",
                         "example": 100000
                     },
-                    "number": {
+                    "limit": {
                         "description": "獎品剩餘數量",
                         "type": "integer",
                         "example": 10
+                    },
+                    "memberList": {
+                        "description": "得獎人們",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Candidate.Candidate"
+                        }
                     }
                 },
                 "type": "object"

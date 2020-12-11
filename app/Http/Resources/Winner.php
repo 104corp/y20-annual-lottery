@@ -38,7 +38,9 @@ class Winner extends JsonResource
     {
         return [
             'awardName' => $this->name,
-            'winners' => Candidate::collection($this->candidates),
+            'money' => $this->money,
+            'limit' => (int) $this->number,
+            'memberList' => Candidate::collection($this->candidates),
         ];
     }
 }

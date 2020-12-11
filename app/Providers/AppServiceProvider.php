@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Model\Award;
 use App\Observers\AwardObserver;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
