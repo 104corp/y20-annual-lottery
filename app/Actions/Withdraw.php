@@ -107,7 +107,6 @@ class Withdraw extends Action
 
         $award->number += 1;
         $award->save();
-
     }
 
     /**
