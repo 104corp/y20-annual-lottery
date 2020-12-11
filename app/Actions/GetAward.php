@@ -5,7 +5,6 @@ namespace App\Actions;
 use App\Model\Award;
 use App\Exceptions\Model\ResourceErrorException;
 use App\Http\Resources\Award as ResourcesAward;
-use App\Http\Resources\Winner;
 use Lorisleiva\Actions\Action;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
@@ -18,7 +17,7 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
  *     description = "列出指定獎項的得獎者",
  *     tags = {"獎品"},
  *     @OA\Parameter(
- *         name = "awardName",
+ *         name = "name",
  *         in = "query",
  *         description = "獎項名稱",
  *         required = true,
@@ -109,21 +108,21 @@ class GetAward extends Action
     public function rules()
     {
         return [
-            'awardName' => 'required',
+            'name' => 'required',
         ];
     }
 
     /**
      * Execute the action and return a result.
      *
-     * @param string $awardName
+     * @param string $name
      *
      * @return Award
      * @throws ResourceErrorException|ResourceNotFoundException
      */
-    public function handle(string $awardName)
+    public function handle(string $name)
     {
-        $award = Award::where('name', $awardName)->with('candidates')->first();
+        $award = Award::where('name', $name)->with('candidates')->first();
         if (is_null($award)) {
             throw new ResourceNotFoundException('找不到對應的獎項！');
         }

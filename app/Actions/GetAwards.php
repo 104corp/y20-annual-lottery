@@ -65,7 +65,7 @@ class GetAwards extends Action
      */
     public function handle()
     {
-        $awards = Award::all();
+        $awards = Award::with('candidates')->get();
         return $awards;
     }
 

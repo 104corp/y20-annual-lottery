@@ -4,6 +4,7 @@ namespace App\Actions;
 
 use App\Model\Candidate;
 use App\Exceptions\Model\ResourceErrorException;
+use App\Model\Award;
 use Lorisleiva\Actions\Action;
 
 /**
@@ -20,7 +21,8 @@ use Lorisleiva\Actions\Action;
  *             @OA\Property(
  *                 property = "staffCode",
  *                 description = "員編",
- *                 example = {"0001"}
+ *                 type = "string",
+ *                 example = "0001"
  *             ),
  *         ),
  *     ),
@@ -83,7 +85,7 @@ class Withdraw extends Action
     public function rules()
     {
         return [
-            'staffCode' => 'required|array',
+            'staffCode' => 'required|string',
         ];
     }
 
@@ -93,22 +95,19 @@ class Withdraw extends Action
      * @return void
      * @throws ResourceErrorException
      */
-    public function handle(array $staffCode)
+    public function handle(string $staffCode)
     {
-        $withdrawingCandidates = Candidate::whereIn('staff_code', $staffCode)->get();
-        $awards = $withdrawingCandidates->pluck('award_id');
-        if ($awards->contains(null)) {
+        $withdrawingCandidate = Candidate::where('staff_code', $staffCode)->first();
+        $award = $withdrawingCandidate->award;
+        if (is_null($award)) {
             throw new ResourceErrorException('沒中獎的人不能放棄得獎！');
         }
 
-        $withdrawingCandidates->each(function ($candidate) {
-            $award = $candidate->award;
-            $award->number += 1;
-            $award->save();
-        });
+        Candidate::where('id', $withdrawingCandidate->id)->update(['award_id' => null]);
 
-        $candidateIds = $withdrawingCandidates->pluck('id');
-        Candidate::whereIn('id', $candidateIds)->update(['award_id' => null]);
+        $award->number += 1;
+        $award->save();
+
     }
 
     /**

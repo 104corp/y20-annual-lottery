@@ -120,23 +120,23 @@ class Draw extends Action
     public function rules()
     {
         return [
-            'awardName' => 'required',
-            'candidateNumber' => 'nullable|gte:1',
+            'name' => 'required',
+            'number' => 'nullable|gte:1',
         ];
     }
 
     /**
      * Execute the action and return a result.
-     * @param string $awardName
-     * @param int $candidateNumber
+     * @param string $name
+     * @param int $number
      *
      * @return Award 獎
      * @throws ResourceNotFoundException|ResourceErrorException
      */
-    public function handle($awardName, $candidateNumber): Award
+    public function handle($name, $number): Award
     {
-        $candidateNumber = $candidateNumber ?? 1;
-        $award = $this->handleAward($awardName, $candidateNumber);
+        $award = $this->handleAward($name, $number);
+        $number = $number ?? $award->number;
 
         $candidates = Candidate::notWinners()->get();
 
@@ -152,10 +152,10 @@ class Draw extends Action
         }
 
         // 在 shuffle 過後的名單內再 random 挑出需要數量的獲獎者
-        $winners = $shuffledCandidates->random($candidateNumber);
+        $winners = $shuffledCandidates->random($number);
 
         $this->updateCandidatesAsWinners($winners, $award);
-        $this->udateAwardNumber($award, $candidateNumber);
+        $this->udateAwardNumber($award, $number);
 
         return $award;
     }
@@ -172,18 +172,21 @@ class Draw extends Action
 
     /**
      * @param string $awardName
-     * @param int $candidateNumber
+     * @param int|null $candidateNumber 如果為 null 就不判斷
      *
      * @return Award
      * @throws ResourceNotFoundException|ResourceErrorException
      */
-    private function handleAward(string $awardName, int $candidateNumber): Award
+    private function handleAward(string $awardName, ?int $candidateNumber): Award
     {
         $award = Award::where('name', $awardName)->first();
         if (is_null($award)) {
             throw new ResourceNotFoundException('找不到對應的獎項！');
         }
-        if ($award->number <= 0 || $award->number < $candidateNumber) {
+        if (
+            !is_null($candidateNumber) &&
+            ($award->number <= 0 || $award->number < $candidateNumber)
+        ) {
             throw new ResourceErrorException('此獎項剩餘數量不足，抽不出那麼多人！');
         }
         return $award;

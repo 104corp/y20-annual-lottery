@@ -213,7 +213,7 @@
                 "description": "列出指定獎項的得獎者",
                 "parameters": [
                     {
-                        "name": "awardName",
+                        "name": "name",
                         "in": "query",
                         "description": "獎項名稱",
                         "required": true,
@@ -431,9 +431,8 @@
                                 "properties": {
                                     "staffCode": {
                                         "description": "員編",
-                                        "example": [
-                                            "0001"
-                                        ]
+                                        "type": "string",
+                                        "example": "0001"
                                     }
                                 },
                                 "type": "object"
@@ -550,25 +549,6 @@
                         "description": "到職日",
                         "type": "string",
                         "example": "2000/01/01"
-                    }
-                },
-                "type": "object"
-            },
-            "Candidate.Winner": {
-                "title": "Candidate.Winner",
-                "description": "得獎者",
-                "properties": {
-                    "awardName": {
-                        "description": "獎項名",
-                        "type": "string",
-                        "example": "一獎"
-                    },
-                    "winners": {
-                        "description": "得獎人們",
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/Candidate.Candidate"
-                        }
                     }
                 },
                 "type": "object"

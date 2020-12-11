@@ -49,7 +49,7 @@ class Award extends JsonResource
     public function toArray($request)
     {
         return [
-            'awardName' => $this->name,
+            'name' => $this->name,
             'money' => $this->money,
             'limit' => (int) $this->number,
             'memberList' => Candidate::collection($this->candidates),
