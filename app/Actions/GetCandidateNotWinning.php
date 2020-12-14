@@ -11,7 +11,7 @@ use Lorisleiva\Actions\Action;
  * 列出沒得獎的參加者
  *
  * @OA\Get(
- *     path = "/api/candidate/not-win",
+ *     path = "/api/candidate/no-win",
  *     summary = "列出沒得獎的參加者",
  *     description = "列出沒得獎的參加者",
  *     tags = {"參加者"},

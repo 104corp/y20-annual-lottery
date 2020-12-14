@@ -316,7 +316,7 @@
                 }
             }
         },
-        "/api/candidate/not-win": {
+        "/api/candidate/no-win": {
             "get": {
                 "tags": [
                     "參加者"
