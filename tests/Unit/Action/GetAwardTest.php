@@ -30,7 +30,7 @@ class GetAwardTest extends TestCase
         $candidate->award->decrement('number');
 
         // act
-        $actual = (new GetAward(['awardName' => '一獎']))->run();
+        $actual = (new GetAward(['name' => '一獎']))->run();
 
         // assert
         $this->assertInstanceOf(Award::class, $actual);
@@ -44,7 +44,7 @@ class GetAwardTest extends TestCase
         $this->expectException(ResourceNotFoundException::class);
 
         // act
-        (new GetAward(['awardName' => 'Obama']))->run();
+        (new GetAward(['name' => 'Obama']))->run();
     }
 
     public function testGetAwardFailedBecauseThereIsNoWinnerForThisAward()
@@ -54,6 +54,6 @@ class GetAwardTest extends TestCase
         $this->expectException(ResourceErrorException::class);
 
         // act
-        (new GetAward(['awardName' => '一獎']))->run();
+        (new GetAward(['name' => '一獎']))->run();
     }
 }

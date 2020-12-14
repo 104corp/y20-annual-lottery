@@ -4,7 +4,6 @@ namespace App\Actions;
 
 use App\Model\Candidate;
 use App\Exceptions\Model\ResourceErrorException;
-use App\Model\Award;
 use Lorisleiva\Actions\Action;
 
 /**

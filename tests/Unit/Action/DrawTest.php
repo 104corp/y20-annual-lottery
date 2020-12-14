@@ -26,8 +26,8 @@ class DrawTest extends TestCase
     {
         // act
         $actual = (new Draw())->run([
-            'awardName' => '一獎',
-            'candidateNumber' => 1,
+            'name' => '一獎',
+            'number' => 1,
         ]);
 
         // assert
@@ -44,8 +44,8 @@ class DrawTest extends TestCase
     {
         // act
         $actual = (new Draw())->run([
-            'awardName' => '三獎',
-            'candidateNumber' => 3,
+            'name' => '三獎',
+            'number' => 3,
         ]);
 
         // assert
@@ -66,8 +66,8 @@ class DrawTest extends TestCase
 
         // act
         (new Draw())->run([
-            'awardName' => '一獎',
-            'candidateNumber' => 3,
+            'name' => '一獎',
+            'number' => 3,
         ]);
     }
 
@@ -79,8 +79,8 @@ class DrawTest extends TestCase
 
         // act
         (new Draw())->run([
-            'awardName' => '獎獎獎獎',
-            'candidateNumber' => 3,
+            'name' => '獎獎獎獎',
+            'number' => 3,
         ]);
     }
 
@@ -95,8 +95,8 @@ class DrawTest extends TestCase
 
         // act
         (new Draw())->run([
-            'awardName' => '一獎',
-            'candidateNumber' => 1,
+            'name' => '一獎',
+            'number' => 1,
         ]);
     }
 

@@ -2,7 +2,6 @@
 
 namespace App\Actions;
 
-use App\Actions\Traits\HandleCsv;
 use App\Http\Resources\Award as ResourcesAward;
 use App\Model\Award;
 use Illuminate\Support\Collection;
@@ -36,8 +35,6 @@ use Lorisleiva\Actions\Action;
  */
 class GetAwards extends Action
 {
-    use HandleCsv;
-
     /**
      * Determine if the user is authorized to make this action.
      *

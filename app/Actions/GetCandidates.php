@@ -2,7 +2,6 @@
 
 namespace App\Actions;
 
-use App\Actions\Traits\HandleCsv;
 use App\Http\Resources\Candidate as ResourcesCandidate;
 use App\Model\Candidate;
 use Illuminate\Support\Collection;
@@ -36,8 +35,6 @@ use Lorisleiva\Actions\Action;
  */
 class GetCandidates extends Action
 {
-    use HandleCsv;
-
     /**
      * Determine if the user is authorized to make this action.
      *

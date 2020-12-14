@@ -20,12 +20,12 @@ Artisan::command('inspire', function () {
 })->describe('Display an inspiring quote');
 
 Artisan::command('program:start {--type=*}', function () {
-    $type = $this->option('type')[0] ?? Init::CSV_TYPE_TEST;
+    $type = $this->option('type')[0] ?? Init::CSV_TYPE_REAL;
 
     Artisan::call('migrate:fresh');
     $this->comment('database has been droped and then migrated again...');
     Artisan::call("program:init --type=$type");
-    $this->comment('data has been initialized...');
+    $this->comment('The data has been initialized sucessfully');
     $this->comment('server is about to start...');
     Artisan::call('serve');
 });

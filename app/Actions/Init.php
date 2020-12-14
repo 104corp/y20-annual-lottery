@@ -13,6 +13,7 @@ class Init extends Action
     use HandleCsv;
 
     public const CSV_TYPE_TEST = 'test';
+    public const CSV_TYPE_REAL = 'real';
 
     protected static $commandSignature = 'program:init {--type=* : test or real}';
 
@@ -33,7 +34,7 @@ class Init extends Action
      */
     public function getAttributesFromCommand(Command $command): array
     {
-        $type = $command->option('type')[0] ?? Init::CSV_TYPE_TEST;
+        $type = $command->option('type')[0] ?? Init::CSV_TYPE_REAL;
         return [
             'type' => $type,
         ];
@@ -44,30 +45,53 @@ class Init extends Action
      *
      * @return boolean
      */
-    public function handle(): bool
+    public function handle(): array
     {
+        $response = [
+            'valid' => true,
+            'succeeded' => true,
+        ];
         if ((Award::all())->isNotEmpty() || (Candidate::all())->isNotEmpty()) {
-            return false;
+            $response['succeeded'] = false;
+            return $response;
         }
+        $insertCandidateData = $this->handleCsvData('candidates', $this->type);
+        if (
+            $this->type != self::CSV_TYPE_TEST &&
+            $this->isGivenDataNotValid($insertCandidateData)
+        ) {
+            $response['valid'] = false;
+            return $response;
+        }
+        Candidate::insert($insertCandidateData);
+
         $insertAwardData = $this->handleCsvData('awards', $this->type);
         Award::insert($insertAwardData);
-        $insertCandidateData = $this->handleCsvData('candidates', $this->type);
-        Candidate::insert($insertCandidateData);
-        return true;
+        return $response;
     }
 
     /**
-     * @param bool $succeeded
+     * @param array $response
      * @param Command $command
      *
      * @return void
      */
-    public function consoleOutput($succeeded, Command $command)
+    public function consoleOutput($response, Command $command)
     {
-        if ($succeeded) {
-            $command->comment('data has been initialized!');
+        if (!$response['succeeded']) {
+            $command->comment('The data is already initialized!');
             return;
         }
-        $command->comment('data already initialized!');
+        if (!$response['valid']) {
+            // kill the entire starting process
+            dd('The givern data is not correct!');
+        }
+        $command->comment('The data has been initialized sucessfully!');
+    }
+
+    public function isGivenDataNotValid(array $data)
+    {
+        $hashKey = env('HASH_KEY');
+        return $hashKey !== hash('sha256', json_encode($data));
     }
 }

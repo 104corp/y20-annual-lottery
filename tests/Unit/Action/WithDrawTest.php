@@ -27,10 +27,7 @@ class WithDrawTest extends TestCase
 
         // act
         (new Withdraw())->run([
-            'staffCode' =>
-            [
-                '0209',
-            ]
+            'staffCode' => '0209',
         ]);
     }
 
@@ -44,10 +41,7 @@ class WithDrawTest extends TestCase
 
         // act
         (new Withdraw())->run([
-            'staffCode' =>
-            [
-                $candidate->staff_code,
-            ]
+            'staffCode' => $candidate->staff_code,
         ]);
 
         // assert
