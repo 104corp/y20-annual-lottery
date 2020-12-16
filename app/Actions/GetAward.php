@@ -16,14 +16,12 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
  *     summary = "列出指定獎項的得獎者",
  *     description = "列出指定獎項的得獎者",
  *     tags = {"獎品"},
- *     @OA\Schema(
- *         @OA\Parameter(
- *             name = "name",
- *             in = "query",
- *             description = "獎項名稱",
- *             required = true,
- *             example = "一獎"
- *         ),
+ *     @OA\Parameter(
+ *         name = "name",
+ *         in = "query",
+ *         description = "獎項名稱",
+ *         required = true,
+ *         example = "一獎"
  *     ),
  *     @OA\Response(
  *         response = "200",

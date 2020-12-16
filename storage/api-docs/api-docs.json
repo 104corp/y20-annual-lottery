@@ -211,6 +211,15 @@
                 ],
                 "summary": "列出指定獎項的得獎者",
                 "description": "列出指定獎項的得獎者",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "獎項名稱",
+                        "required": true,
+                        "example": "一獎"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "正常回傳",
