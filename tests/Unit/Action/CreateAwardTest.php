@@ -22,9 +22,9 @@ class CreateAwardTest extends TestCase
     {
         // act
         (new CreateAward())->run([
-            'awardName' => '螺旋獎',
+            'name' => '螺旋獎',
             'money' => 10000,
-            'number' => 3,
+            'limit' => 3,
         ]);
 
         // assert
@@ -46,7 +46,7 @@ class CreateAwardTest extends TestCase
 
         // act
         (new CreateAward())->run([
-            'awardName' => '一獎',
+            'name' => '一獎',
             'money' => 10000,
             'number' => 3,
         ]);

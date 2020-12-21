@@ -49,6 +49,7 @@ class Init extends Action
     {
         $response = [
             'valid' => true,
+            'logValid' => true,
             'succeeded' => true,
         ];
         if ((Award::all())->isNotEmpty() || (Candidate::all())->isNotEmpty()) {
@@ -56,13 +57,14 @@ class Init extends Action
             return $response;
         }
         $insertCandidateData = $this->handleCsvData('candidates', $this->type);
-        if (
-            $this->type != self::CSV_TYPE_TEST &&
-            $this->isGivenDataNotValid($insertCandidateData)
-        ) {
-            $response['valid'] = false;
+
+        $response['valid'] = $this->delegateTo(CheckData::class);
+        $response['logValid'] = $this->delegateTo(CheckLog::class);
+
+        if ($this->validationFailed($response)) {
             return $response;
         }
+
         Candidate::insert($insertCandidateData);
 
         $insertAwardData = $this->handleCsvData('awards', $this->type);
@@ -84,14 +86,22 @@ class Init extends Action
         }
         if (!$response['valid']) {
             // kill the entire starting process
-            dd('The givern data is not correct!');
+            dd('The given data is not correct!');
+        }
+        if (!$response['logValid']) {
+            // kill the entire starting process
+            dd('The Log has been tampered with!');
         }
         $command->comment('The data has been initialized sucessfully!');
     }
 
-    public function isGivenDataNotValid(array $data)
+    /**
+     * @param array $response
+     *
+     * @return bool
+     */
+    private function validationFailed(array $response): bool
     {
-        $hashKey = env('HASH_KEY');
-        return $hashKey !== hash('sha256', json_encode($data));
+        return !$response['valid'] || !$response['logValid'];
     }
 }

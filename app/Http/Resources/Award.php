@@ -48,11 +48,17 @@ class Award extends JsonResource
      */
     public function toArray($request)
     {
+        /**
+         * 如果有 winners 這個 attribute 代表是這次抽獎的贏家們
+         * @see App\Actions\Draw::handle()
+         */
+        $candidates = $this->winners ?? $this->candidates;
+
         return [
             'name' => $this->name,
             'money' => $this->money,
             'limit' => (int) $this->number,
-            'memberList' => Candidate::collection($this->candidates),
+            'memberList' => Candidate::collection($candidates),
         ];
     }
 }

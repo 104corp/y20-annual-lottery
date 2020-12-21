@@ -2,6 +2,7 @@
 
 namespace App\Actions;
 
+use App\Actions\Traits\DrawingLog;
 use App\Model\Award;
 use App\Model\Candidate;
 use App\Exceptions\Model\ResourceErrorException;
@@ -102,6 +103,8 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
  */
 class Draw extends Action
 {
+    use DrawingLog;
+
     /**
      * Determine if the user is authorized to make this action.
      *
@@ -156,6 +159,12 @@ class Draw extends Action
 
         $this->updateCandidatesAsWinners($winners, $award);
         $this->udateAwardNumber($award, $number);
+
+        // 塞給 model 這次的贏家
+        $award->winners = $winners;
+
+        // 寫 log
+        $this->logDrawing($award, $winners);
 
         return $award;
     }

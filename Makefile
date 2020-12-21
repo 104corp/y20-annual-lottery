@@ -12,6 +12,19 @@ key.generate.test:
 program.start:
 	touch database/database.sqlite && php artisan program:start --type=$(type)
 
+.PHONY: program.continue
+program.continue:
+	php artisan program:check-data --type=$(type)
+	php artisan program:check-log --type=$(type)
+	php artisan serve
+
+.PHONY: program.clear-log
+program.clear-log:
+	rm storage/logs/drawing.log
+	sed -i.bak 's/LOG_KEY=.*//g' .env
+	sed -i '' -e "13s/^.*/LOG_KEY=/" .env
+	rm .env.bak
+
 .PHONY: program.print-result
 program.print-result:
 	php artisan program:print-result

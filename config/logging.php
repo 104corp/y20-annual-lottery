@@ -99,6 +99,12 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+
+        'drawing' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/drawing.log'),
+            'level' => 'info',
+        ]
     ],
 
 ];

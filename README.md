@@ -18,7 +18,7 @@
 
 若是要運行測試資料（`candidates_test.csv` & `awards_test.csv`），則下 `make program.start type=test`。
 
-若程式已運行過，在 `database/database.sqlite` 會有抽獎紀錄，此時要運行則用 `php artisan serve` 即可。
+若程式已運行過，在 `database/database.sqlite` 會有抽獎紀錄，此時要運行則用 `make program.continue` 即可。
 
 ## Swagger 文件
 
@@ -27,6 +27,14 @@
 - `make api-docs` 即可在 `storage/api-docs/` 產生 swagger json 文件；
 - 靜態頁面於 `http://localhost:8000/api/documentation`。
 
+## LOG 紀錄
+
+抽獎、放棄這兩個行為會進行紀錄，紀錄檔 `drawing.log` 會紀錄於 `storage/logs/` 目錄下。
+若要清空紀錄，可以下 `make program.clear-log` 指令。
+
+## HASH 對照資料
+
+`.env` 中有紀錄兩個 sha256 的 key，其中 `HASH_KEY` 是員工名單的 sha256 名單，若名單有不同，則無法運行程式；另一個 `LOG_KEY` 是 log 檔的 sha256，程式運行中會同時更新此 key。當程式重新啟動時也會對照此 key，log 若有異動則無法運行程式。
 ## 測試相關
 
 - code-sniffing 可下 `./vendor/bin/phpcs` 相關設定檔於 [`phpcs.xml`](/phpcs.xml)；

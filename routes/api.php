@@ -27,7 +27,7 @@ Route::namespace('\App\Actions')->group(function () {
     Route::prefix('award')->group(function () {
         Route::get('/all', 'GetAwards');
         Route::get('/', 'GetAward');
-        // Route::post('/create', 'CreateAward');
+        Route::post('/create', 'CreateAward');
     });
 
     Route::post('/draw', 'Draw');

@@ -2,6 +2,7 @@
 
 namespace App\Actions;
 
+use App\Actions\Traits\DrawingLog;
 use App\Exceptions\Model\ResourceErrorException;
 use App\Model\Award;
 use Lorisleiva\Actions\Action;
@@ -79,6 +80,8 @@ use Lorisleiva\Actions\Action;
  */
 class CreateAward extends Action
 {
+    use DrawingLog;
+
     /**
      * Determine if the user is authorized to make this action.
      *
@@ -97,33 +100,34 @@ class CreateAward extends Action
     public function rules()
     {
         return [
-            'awardName' => 'required',
+            'name' => 'required',
             'money' => 'required|gte:1000',
-            'number' => 'nullable|integer',
+            'limit' => 'nullable|integer',
         ];
     }
 
     /**
      * Execute the action and return a result.
-     * @param string $awardName
+     * @param string $name
      * @param int $money
-     * @param int|null $number
+     * @param int|null $limit
      *
      * @return void
      */
-    public function handle(string $awardName, int $money, $number = null)
+    public function handle(string $name, int $money, $limit = null)
     {
-        $number = $number ?? 10;
-        $oldAward = Award::where('name', $awardName)->first();
+        $limit = $limit ?? 10;
+        $oldAward = Award::where('name', $name)->first();
         if (!is_null($oldAward)) {
             throw new ResourceErrorException('該獎項已存在！');
         }
 
         Award::insert([
-            'name' => $awardName,
+            'name' => $name,
             'money' => $money,
-            'number' => $number,
+            'number' => $limit,
         ]);
+        $this->logAwardCreating($name, $money, $limit);
     }
 
     /**

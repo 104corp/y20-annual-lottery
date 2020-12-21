@@ -2,6 +2,7 @@
 
 namespace App\Actions;
 
+use App\Actions\Traits\DrawingLog;
 use App\Model\Candidate;
 use App\Exceptions\Model\ResourceErrorException;
 use Lorisleiva\Actions\Action;
@@ -66,6 +67,8 @@ use Lorisleiva\Actions\Action;
  */
 class Withdraw extends Action
 {
+    use DrawingLog;
+
     /**
      * Determine if the user is authorized to make this action.
      *
@@ -106,6 +109,7 @@ class Withdraw extends Action
 
         $award->number += 1;
         $award->save();
+        $this->logWithdrawing($award, $withdrawingCandidate);
     }
 
     /**
