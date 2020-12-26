@@ -16,6 +16,11 @@
 - `Init.php`：初始化塞入資料進資料庫的邏輯，主要是用於 `routes/console.php` 下指令需要
 - `PrintResult.php`： `AwardObserver::updated()` 監聽時呼叫，當抽出新得獎者時，會更新 `storage/app/winnerList.csv` 的資料。
 
+有兩個 trait：
+
+- `HandleCsv.php`：處理匯入獎項、員工的資料進入 database 裡。
+- `DrawingLog.php`：寫抽獎、放棄獎項的使用紀錄 `drawing.log`，檔案位於 `storage/logs` 裡。
+
 ### Laravel Action
 
 > 官方文件：https://laravelactions.com/

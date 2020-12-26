@@ -55,6 +55,17 @@ return [
             'visibility' => 'public',
         ],
 
+        'db' => [
+            'project' => [
+                'driver' => 'local',
+                'root'   => database_path(),
+            ],
+            'backup' => [
+                'driver' => 'local',
+                'root'   => env('DATABASE_BACKUP_PATH') . '/database_backup/',
+            ],
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

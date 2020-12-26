@@ -40,11 +40,6 @@ class CheckData extends Action
         return [
             'type' => $type,
         ];
-        $this->response = [
-            'valid' => true,
-            'logValid' => true,
-            'succeeded' => true,
-        ];
     }
 
     /**

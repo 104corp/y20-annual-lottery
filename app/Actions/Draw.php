@@ -193,8 +193,8 @@ class Draw extends Action
             throw new ResourceNotFoundException('找不到對應的獎項！');
         }
         if (
-            !is_null($candidateNumber) &&
-            ($award->number <= 0 || $award->number < $candidateNumber)
+            $award->number <= 0 ||
+            $award->number < $candidateNumber
         ) {
             throw new ResourceErrorException('此獎項剩餘數量不足，抽不出那麼多人！');
         }
