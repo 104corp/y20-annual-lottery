@@ -64,7 +64,7 @@ class CheckData extends Action
     }
 
     /**
-     * @param array $response
+     * @param bool $valid
      * @param Command $command
      *
      * @return void

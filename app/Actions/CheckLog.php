@@ -77,7 +77,7 @@ class CheckLog extends Action
     }
 
     /**
-     * @param array $logValid
+     * @param bool $logValid
      * @param Command $command
      *
      * @return void
