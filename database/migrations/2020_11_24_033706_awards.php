@@ -16,7 +16,7 @@ class Awards extends Migration
         Schema::create('awards', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('money');
+            $table->string('money');
             $table->integer('number');
         });
     }
